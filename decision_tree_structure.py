@@ -19,6 +19,9 @@ import graphviz
 iris = load_iris()
 X = iris.data
 y = iris.target
+class_names = np.unique(y)
+class_names = [str(x) for x in class_names]
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
 estimator = DecisionTreeClassifier(max_leaf_nodes=3, random_state=0)
@@ -122,7 +125,7 @@ print("It is %s %% of all nodes." % (100 * len(common_node_id) / n_nodes,))
 '''
 将上面的树进行可视化
 '''
-dot_data = tree.export_graphviz(estimator, out_file=None, filled=True, rounded=True, special_characters=True)
+dot_data = tree.export_graphviz(estimator, out_file=None, class_names=class_names, filled=True, rounded=True, special_characters=True)
 graph = graphviz.Source(dot_data)
 graph.render("DT_estimator")
 
